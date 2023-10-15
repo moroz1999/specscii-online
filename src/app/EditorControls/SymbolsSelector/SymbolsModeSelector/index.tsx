@@ -1,8 +1,11 @@
 import {useContext} from 'react';
-import {editorContext} from '@/app/models/editor-context';
+
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
 import {SymbolsMode} from '@/app/models/symbols-mode';
+import {editorContext} from '@/app/models/editor-context';
+
 
 export const SymbolsModeSelector = () => {
     const {symbolsMode, setSymbolsMode} = useContext(editorContext);

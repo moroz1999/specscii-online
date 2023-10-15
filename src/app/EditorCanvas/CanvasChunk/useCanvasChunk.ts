@@ -1,6 +1,6 @@
 import React, {useContext, useRef, useState} from 'react';
 
-import {CanvasPosition} from './canvas-chunk';
+import {CanvasPosition} from '.';
 
 import {editorContext} from '@/app/models/editor-context';
 

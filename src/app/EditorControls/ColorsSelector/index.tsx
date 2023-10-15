@@ -1,18 +1,16 @@
 import {useContext} from 'react';
 
-
 import { useColorHotkeys } from './useColorHotkeys';
-
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import PaletteColorsSelector from './PaletteColorsSelector';
 
 import {ZxPalette} from '@/app/models/zx-palette';
 import {editorContext} from '@/app/models/editor-context';
 
-import {paletteProvider} from '../../services/palette-provider';
+import {paletteProvider} from '@/app/services/palette-provider';
 
-import PaletteColorsSelector from './palette-colors-selector/palette-colors-selector';
 
 import styles from './colors-selector.module.css';
 
@@ -37,9 +35,6 @@ export default function ColorsSelector() {
         setInk,
         setPaper
     });
-
-
-
 
     return (
         <Stack

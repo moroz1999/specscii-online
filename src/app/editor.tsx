@@ -4,8 +4,8 @@ import {useEffect, useMemo, useState} from 'react';
 import {useUndo} from '@/app/hooks/useUndo';
 import {useExitDetection} from '@/app/hooks/useExitDetection';
 
-import EditorCanvas from '@/app/editor-canvas/editor-canvas';
-import EditorControls from '@/app/editor-controls/editor-controls';
+import EditorCanvas from '@/app/EditorCanvas';
+import EditorControls from '@/app/EditorControls';
 
 import {SymbolsMode} from '@/app/models/symbols-mode';
 import {imageContext} from '@/app/models/image-context';

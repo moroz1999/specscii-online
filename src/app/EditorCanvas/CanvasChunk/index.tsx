@@ -71,8 +71,11 @@ export const CanvasChunk = ({
     const canvasClassname = clsx(
         styles['canvas-chunk'],
         {
-            [styles['grid']]: grid,
-            [styles['grid-dashed']]: !grid
+            // use explicit comparison because
+            // we have 3 variants of grid state:
+            // true (ON), false (DASHED), null (OFF)
+            [styles['grid']]: grid === true,
+            [styles['grid-dashed']]: grid === false
         }
     );
 

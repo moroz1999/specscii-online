@@ -2,7 +2,7 @@ import {flashSwapContext} from '@/app/models/flash-swap-context';
 
 import { useEditorCanvas } from './useEditorCanvas';
 
-import { CanvasChunk } from '@/app/editor-canvas/canvas-chunk/canvas-chunk';
+import { CanvasChunk } from '@/app/EditorCanvas/CanvasChunk';
 
 import styles from './editor-canvas.module.css';
 

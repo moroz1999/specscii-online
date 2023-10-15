@@ -1,12 +1,19 @@
 import {useContext} from 'react';
-import {editorContext} from '@/app/models/editor-context';
-import {symbolsProvider} from '@/app/services/symbols-provider';
-import {SymbolSelector} from '@/app/editor-controls/symbols-selector/symbol-selector/symbol-selector';
-import styles from './symbols-selector.module.css';
-import {SymbolsModeSelector} from '@/app/editor-controls/symbols-selector/symbols-mode-selector/symbols-mode-selector';
+
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
+
 import {SymbolsMode} from '@/app/models/symbols-mode';
+import {editorContext} from '@/app/models/editor-context';
+
+import {symbolsProvider} from '@/app/services/symbols-provider';
+
+import {SymbolSelector} from '@/app/EditorControls/SymbolsSelector/SymbolSelector';
+import {SymbolsModeSelector} from '@/app/EditorControls/SymbolsSelector/SymbolsModeSelector';
+
+import styles from './symbols-selector.module.css';
+
+
 
 export default function SymbolsSelector() {
     const {symbol, setSymbol, setSymbolsMode} = useContext(editorContext);

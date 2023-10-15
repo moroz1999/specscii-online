@@ -3,7 +3,7 @@ import React, {useContext, useLayoutEffect} from 'react';
 import {editorContext} from '@/app/models/editor-context';
 import {flashSwapContext} from '@/app/models/flash-swap-context';
 
-import {CanvasPosition} from './canvas-chunk';
+import {CanvasPosition} from '.';
 
 import {imageDataCache} from '@/app/services/image-data-cache';
 import {localStorageService} from '@/app/services/local-storage-service';

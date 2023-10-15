@@ -1,4 +1,4 @@
-import { CanvasPosition } from "./canvas-chunk";
+import { CanvasPosition } from ".";
 
 export const changeSymbolToBlock = (
     symbol: number,
