@@ -1,34 +1,65 @@
-import {useContext} from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 
-import {editorContext} from '@/app/models/editor-context';
-import {undoHistoryContext} from '@/app/models/undo-context';
+import { useUndo } from '@/app/hooks/useUndo';
+import { useFieldsMap } from '@/app/hooks/useFieldsMap';
 
-import {undoHistoryService} from '@/app/services/undo-history-service';
-import {localStorageService} from '@/app/services/local-storage-service';
 
 
 export const HistoryControls = () => {
-    const {undoHistory, setUndoHistory, undoStepNumber, setUndoStepNumber} = useContext(undoHistoryContext);
-    const {fieldsMap, setFieldsMap} = useContext(editorContext);
+    const {
+        fieldsMap,
+        fieldIndex,
+        setFieldsMap
+    } = useFieldsMap();
 
-    const undo = () => {
-        undoHistoryService.undo(fieldsMap, setFieldsMap, undoStepNumber, setUndoStepNumber, undoHistory, setUndoHistory)
-    };
+    const {
+        isUndoDisabled,
+        isRedoDisabled,
+        handleUndo,
+        handleRedo
+    } = useUndo({
+        fieldsMap,
+        fieldIndex,
+        setFieldsMap
+    });
 
-    const redo = () => {
-        undoHistoryService.redo(fieldsMap, setFieldsMap, undoStepNumber, setUndoStepNumber, undoHistory, setUndoHistory)
-    };
+    useHotkeys(
+        'ctrl+z, ctrl+y',
+        (e, { keys = [] } = {}) => {
+                if (keys[0] === 'z') {
+                    handleUndo();
+                } else {
+                    handleRedo()
+                }
+        },
+        [ handleUndo, handleRedo ]
+    );
 
-    const redoEnabled = (undoStepNumber + 1) < undoHistory.length;
-    const undoEnabled = undoStepNumber > 0;
-
-    return <ButtonGroup fullWidth={true} variant="outlined" aria-label="outlined button group">
-        <Button startIcon={<UndoIcon fontSize="small"/>} disabled={!undoEnabled} onClick={undo}>Undo</Button>
-        <Button startIcon={<RedoIcon fontSize="small"/>} disabled={!redoEnabled} onClick={redo}>Redo</Button>
-    </ButtonGroup>;
+    return (
+        <ButtonGroup
+            fullWidth={true}
+            variant="outlined"
+            aria-label="outlined button group"
+        >
+            <Button
+                startIcon={<UndoIcon fontSize="small"/>}
+                disabled={isUndoDisabled}
+                onClick={handleUndo}
+            >
+                Undo
+            </Button>
+            <Button
+                startIcon={<RedoIcon fontSize="small"/>}
+                disabled={isRedoDisabled}
+                onClick={handleRedo}
+            >
+                Redo
+            </Button>
+        </ButtonGroup>
+    );
 };

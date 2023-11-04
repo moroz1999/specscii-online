@@ -1,14 +1,14 @@
-import {useContext, useRef} from 'react';
+import {useRef} from 'react';
 
 import {styled} from '@mui/material/';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-import {imageContext} from '@/app/models/image-context';
-import {editorContext} from '@/app/models/editor-context';
 
 import {jsonExporter} from '@/app/services/json-export';
 import {localStorageService} from '@/app/services/local-storage-service';
+import { useSettings } from '@/app/hooks/useSettings';
+import { useFieldsMap } from '@/app/hooks/useFieldsMap';
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -24,8 +24,12 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 export const LoadFile = () => {
-    const {setAuthor, setImageName} = useContext(imageContext);
-    const {setFieldsMap} = useContext(editorContext);
+    const {
+        setAuthor,
+        setImageName
+    } = useSettings();
+
+    const { setFieldsMap } = useFieldsMap();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

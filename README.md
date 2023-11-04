@@ -5,7 +5,7 @@ A modern graphic editor tailored for the ZX Spectrum enthusiasts. This applicati
 ## Technologies Used:
 
 - React (with hooks)
-- Context API
+- Redux-Toolkit
 - JSON
 - MUI (Material-UI)
 - FileReader API

@@ -51,6 +51,6 @@ export const useColorHotkeys = (
     );
 
     return {
-        swap,
+        swap
     };
 };

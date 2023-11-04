@@ -1,4 +1,4 @@
-import { PaletteColorsSelectorProps } from '.';
+import { PaletteColorsSelectorProps } from './';
 
 import {ZxColorNames} from '@/app/models/zx-color-names';
 
