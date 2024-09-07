@@ -1,9 +1,13 @@
-import {Metadata} from 'next';
+import { Metadata } from 'next';
+
 import Editor from '@/app/editor';
+import StoreProvider from '@/app/Provider';
 
 export default function Home() {
     return (
-        <Editor></Editor>
+        <StoreProvider>
+            <Editor />
+        </StoreProvider>
     );
 }
 export const metadata: Metadata = {

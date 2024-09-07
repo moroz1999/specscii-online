@@ -1,8 +1,8 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
-import {CanvasPosition} from '.';
+import {CanvasPosition} from './';
+import { useEditor } from '@/app/hooks/useEditor';
 
-import {editorContext} from '@/app/models/editor-context';
 
 interface UseCanvasChunkReturn {
     grid: boolean | null,
@@ -17,7 +17,10 @@ export const useCanvasChunk = (): UseCanvasChunkReturn => {
     const canvasRef = useRef(null);
     const [preview, setPreview] = useState<boolean>(false);
     const [canvasPosition, setCanvasPosition] = useState<CanvasPosition | null>(null);
-    const {grid} = useContext(editorContext);
+
+    const {
+        editorState: { grid }
+    } = useEditor();
 
     return {
         grid,

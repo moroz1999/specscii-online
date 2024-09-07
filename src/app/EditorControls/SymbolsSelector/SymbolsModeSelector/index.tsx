@@ -1,14 +1,18 @@
-import {useContext} from 'react';
-
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import {SymbolsMode} from '@/app/models/symbols-mode';
-import {editorContext} from '@/app/models/editor-context';
+import { useEditor } from '@/app/hooks/useEditor';
 
 
 export const SymbolsModeSelector = () => {
-    const {symbolsMode, setSymbolsMode} = useContext(editorContext);
+    const {
+        editorState: {
+            symbolsMode
+        },
+        setSymbolsMode
+    } = useEditor();
+
     const handleChange = (event: React.MouseEvent<HTMLElement>, newMode: string) => {
         switch (newMode) {
             case SymbolsMode.SYMBOLS:
@@ -24,16 +28,18 @@ export const SymbolsModeSelector = () => {
         }
     };
 
-    return <ToggleButtonGroup
-        color="primary"
-        value={symbolsMode}
-        exclusive
-        onChange={handleChange}
-        aria-label="Mode"
-        size={'small'}
-    >
-        <ToggleButton value="symbols">Symbols</ToggleButton>
-        <ToggleButton value="blocks">Blocks</ToggleButton>
-        <ToggleButton value="ignore">Ignore</ToggleButton>
-    </ToggleButtonGroup>;
+    return (
+        <ToggleButtonGroup
+            exclusive
+            size={'small'}
+            color="primary"
+            aria-label="Mode"
+            value={symbolsMode}
+            onChange={handleChange}
+        >
+            <ToggleButton value="symbols">Symbols</ToggleButton>
+            <ToggleButton value="blocks">Blocks</ToggleButton>
+            <ToggleButton value="ignore">Ignore</ToggleButton>
+        </ToggleButtonGroup>
+    );
 };

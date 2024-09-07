@@ -1,7 +1,8 @@
 import {changeSymbolToBlock} from './changeSymbolToBlock';
 import {CanvasField} from '@/app/models/canvas-field';
 import {SymbolsMode} from '@/app/models/symbols-mode';
-import {CanvasPosition} from '@/app/editor-canvas/canvas-chunk/canvas-chunk';
+
+import {CanvasPosition} from '@/app/EditorCanvas/CanvasChunk';
 
 interface GetSymbolBlockProps {
     reset: boolean,
@@ -13,13 +14,13 @@ interface GetSymbolBlockProps {
 }
 
 export const getSymbolBlock = ({
-                                   reset,
-                                   symbol,
-                                   canvasField,
-                                   symbolsMode,
-                                   canvasSymbol,
-                                   quickCanvasPosition,
-                               }: GetSymbolBlockProps) => {
+    reset,
+    symbol,
+    canvasField,
+    symbolsMode,
+    canvasSymbol,
+    quickCanvasPosition,
+}: GetSymbolBlockProps) => {
 
     switch (symbolsMode) {
         case SymbolsMode.BLOCKS:

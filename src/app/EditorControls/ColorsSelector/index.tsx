@@ -1,14 +1,15 @@
-import {useContext} from 'react';
-
-import { useColorHotkeys } from './useColorHotkeys';
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+
+
+import { useEditor } from '@/app/hooks/useEditor';
+import { useColorHotkeys } from './useColorHotkeys';
+
+
 import PaletteColorsSelector from './PaletteColorsSelector';
 
-import {ZxPalette} from '@/app/models/zx-palette';
-import {editorContext} from '@/app/models/editor-context';
 
+import {ZxPalette} from '@/app/models/zx-palette';
 import {paletteProvider} from '@/app/services/palette-provider';
 
 
@@ -18,12 +19,14 @@ import styles from './colors-selector.module.css';
 export default function ColorsSelector() {
     const palette: ZxPalette = paletteProvider.getPalette();
     const {
-        ink,
-        paper,
-        bright,
+        editorState: {
+            ink,
+            paper,
+            bright
+        },
         setInk,
         setPaper,
-    } = useContext(editorContext);
+    } = useEditor();
 
     const colors = bright ? palette.bright : palette.dark;
 

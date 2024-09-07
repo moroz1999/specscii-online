@@ -1,48 +1,107 @@
-import { useState } from 'react';
+import { useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from './useStore';
 
-import { UndoHistory } from '@/app/models/undo-context';
-import { FieldsMapType } from '@/app/models/editor-state';
+import { UndoHistory } from '@/app/models/undo-state';
+import { CanvasField } from '@/app/models/canvas-field';
+
 
 import { undoHistoryService } from '@/app/services/undo-history-service';
-import useEventListener from '@use-it/event-listener';
+import {
+        addToUndoHistoryAction,
+        setUndoHistoryAction,
+        setUndoStepIndexAction,
+        undoSelector
+} from '@/app/store/Undo/undoSlice';
+import { UpdateFieldProps } from '@/app/store/Fields/fieldsSlice';
+
+
+type hookType = {
+    fieldsMap: Array<CanvasField>,
+    fieldIndex: number,
+    setFieldsMap: (payload: Array<CanvasField>) => void
+};
 
 
 export const useUndo = ({
     fieldsMap,
     setFieldsMap
-}: FieldsMapType) => {
+}: hookType
+) => {
 
-    const [undoHistory, setUndoHistory] = useState<UndoHistory>([] as UndoHistory);
-    const [undoStepNumber, setUndoStepNumber] = useState<number>(0);
+    const {
+        undoHistory,
+        undoStepIndex
+    } = useAppSelector(undoSelector);
+    const dispatch = useAppDispatch();
 
 
-    const keyHandler = (event: KeyboardEvent) => {
-        if (event.key === 'z' && event.ctrlKey) {
-            undoHistoryService.undo(
+
+    const setUndoHistory = useCallback(
+        (payload: UndoHistory) => dispatch(
+            setUndoHistoryAction(payload)
+        ), [dispatch]
+    );
+
+    const setUndoStepIndex = useCallback(
+        (payload: number) => dispatch(
+            setUndoStepIndexAction(payload)
+        ), [dispatch]
+    );
+
+    const addToUndoHistory = useCallback(
+        (payload: UpdateFieldProps) => dispatch(
+            addToUndoHistoryAction(payload)
+        ), [dispatch]
+    );
+
+
+    const handleUndo = useCallback(
+        () => {
+            undoHistoryService.undo({
                 fieldsMap,
-                setFieldsMap,
-                undoStepNumber,
-                setUndoStepNumber,
                 undoHistory,
-                setUndoHistory
-            );
-        } else if (event.key === 'y' && event.ctrlKey) {
-            undoHistoryService.redo(
-                fieldsMap,
+                undoStepIndex,
                 setFieldsMap,
-                undoStepNumber,
-                setUndoStepNumber,
-                undoHistory,
-                setUndoHistory);
-        }
-    };
+                setUndoStepIndex,
+            })
+        },
+        [
+            fieldsMap,
+            undoHistory,
+            undoStepIndex,
+            setFieldsMap,
+            setUndoStepIndex
+        ]
+    );
 
-    useEventListener('keydown', keyHandler);
+    const handleRedo = useCallback(
+        () => {
+            undoHistoryService.redo({
+                fieldsMap,
+                undoHistory,
+                undoStepIndex,
+                setFieldsMap,
+                setUndoStepIndex
+            })
+        },
+        [
+            fieldsMap,
+            undoHistory,
+            undoStepIndex,
+            setFieldsMap,
+            setUndoStepIndex
+        ]
+    );
 
     return {
         undoHistory,
-        undoStepNumber,
+        undoStepIndex,
+        isRedoDisabled: undoStepIndex === undoHistory.length - 1,
+        isUndoDisabled: undoStepIndex <= 0,
         setUndoHistory,
-        setUndoStepNumber
+        addToUndoHistory,
+        setUndoStepIndex,
+        handleUndo,
+        handleRedo
     };
 };

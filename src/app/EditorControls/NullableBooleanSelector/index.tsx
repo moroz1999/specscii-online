@@ -52,19 +52,21 @@ export const NullableBooleanSelector = ({
         }
     };
 
-    return <ToggleButtonGroup
-        className={styles.group}
-        color="primary"
-        value={selected}
-        exclusive
-        onChange={handleChange}
-        aria-label="Mode"
-        size={'small'}
-        fullWidth={true}
-    >
-        <ToggleButton value="on">{optionIcon}{children} {internalLabels[0]}</ToggleButton>
-        <ToggleButton value="off">{internalLabels[1]}</ToggleButton>
-        <ToggleButton value="ignore">{internalLabels[2]}</ToggleButton>
-    </ToggleButtonGroup>;
+    return (
+        <ToggleButtonGroup
+            exclusive
+            size={'small'}
+            color="primary"
+            value={selected}
+            fullWidth={true}
+            aria-label="Mode"
+            className={styles.group}
+            onChange={handleChange}
+        >
+            <ToggleButton value="on">{optionIcon}{children} {internalLabels[0]}</ToggleButton>
+            <ToggleButton value="off">{internalLabels[1]}</ToggleButton>
+            <ToggleButton value="ignore">{internalLabels[2]}</ToggleButton>
+        </ToggleButtonGroup>
+    );
 
 };

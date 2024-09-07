@@ -1,4 +1,4 @@
-import { CanvasPosition } from ".";
+import { CanvasPosition } from './';
 
 export const changeSymbolToBlock = (
     symbol: number,
